@@ -1,13 +1,20 @@
-import React, { useState, FormEvent, useEffect } from 'react';
-import { FiChevronRight } from 'react-icons/fi';
+import React, { useState, FormEvent, useEffect, useCallback } from 'react';
+import { FiChevronRight, FiTrash } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import logoImg from '../../assets/logo.svg';
 import api from '../../services/api';
 
-import { Title, Form, Repositories, Error } from './styles';
+import {
+  Title,
+  Form,
+  Repositories,
+  Repository,
+  DeleteButton,
+  Error,
+} from './styles';
 
-interface Repository {
+interface Repo {
   full_name: string;
   description: string;
   owner: {
@@ -19,7 +26,7 @@ interface Repository {
 const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState('');
   const [inputError, setInputError] = useState('');
-  const [repositories, setRepositories] = useState<Repository[]>(() => {
+  const [repositories, setRepositories] = useState<Repo[]>(() => {
     const storedRepositories = localStorage.getItem(
       '@GithubExplorer:repositories',
     );
@@ -38,28 +45,50 @@ const Dashboard: React.FC = () => {
     );
   }, [repositories]);
 
-  async function handleAddRepository(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
-    event.preventDefault();
+  const handleAddRepository = useCallback(
+    async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+      event.preventDefault();
 
-    if (!newRepo) {
-      setInputError('Digite autor/nome do repositório');
-      return;
-    }
+      if (!newRepo) {
+        setInputError('Digite autor/nome do repositório');
+        return;
+      }
 
-    try {
-      const response = await api.get<Repository>(`repos/${newRepo}`);
+      const findRepositoryIndex = repositories.findIndex(
+        repository =>
+          repository.full_name.toLowerCase() === newRepo.toLowerCase(),
+      );
 
-      const repository = response.data;
+      if (findRepositoryIndex > -1) {
+        setInputError('Repositório já presente na lista');
+        return;
+      }
 
-      setRepositories([...repositories, repository]);
-      setNewRepo('');
-      setInputError('');
-    } catch (error) {
-      setInputError('Erro na busca por esse repositório');
-    }
-  }
+      try {
+        const response = await api.get<Repo>(`repos/${newRepo}`);
+
+        const repository = response.data;
+
+        setRepositories([...repositories, repository]);
+        setNewRepo('');
+        setInputError('');
+      } catch {
+        setInputError('Erro na busca por esse repositório');
+      }
+    },
+    [newRepo, repositories],
+  );
+
+  const handleRemoveRepository = useCallback(
+    (repositoryName: string) => {
+      const newRepositories = repositories.filter(
+        repository => repository.full_name !== repositoryName,
+      );
+
+      setRepositories(newRepositories);
+    },
+    [repositories],
+  );
 
   return (
     <>
@@ -79,22 +108,28 @@ const Dashboard: React.FC = () => {
 
       <Repositories>
         {repositories.map(repository => (
-          <Link
-            key={repository.full_name}
-            to={`/repositories/${repository.full_name}`}
-          >
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-            />
+          <Repository key={repository.full_name}>
+            <DeleteButton
+              type="button"
+              onClick={() => handleRemoveRepository(repository.full_name)}
+            >
+              <FiTrash size={20} />
+            </DeleteButton>
 
-            <div>
-              <strong>{repository.full_name}</strong>
-              <p>{repository.description}</p>
-            </div>
+            <Link to={`/repositories/${repository.full_name}`}>
+              <img
+                src={repository.owner.avatar_url}
+                alt={repository.owner.login}
+              />
 
-            <FiChevronRight size={20} />
-          </Link>
+              <div>
+                <strong>{repository.full_name}</strong>
+                <p>{repository.description}</p>
+              </div>
+
+              <FiChevronRight size={20} />
+            </Link>
+          </Repository>
         ))}
       </Repositories>
     </>

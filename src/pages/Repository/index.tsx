@@ -45,17 +45,6 @@ const Repository: React.FC = () => {
     api.get(`repos/${params.repository}/issues`).then(response => {
       setIssues(response.data);
     });
-
-    //* Método alternativo
-    // async function loadData(): Promise<void> {
-    //   const [repository, issues] = await Promise.all([
-    //     api.get(`repos/${params.repository}`),
-    //     api.get(`repos/${params.repository}/issues`),
-    //   ]);
-
-    //   console.log(repository);
-    //   console.log(issues);
-    // }
   }, [params.repository]);
 
   return (

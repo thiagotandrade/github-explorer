@@ -34,6 +34,7 @@ export const Form = styled.form<FormProps>`
       props.hasError &&
       css`
         border-color: #c53030;
+        background: #fddede;
       `}
 
     &::placeholder {
@@ -66,6 +67,21 @@ export const Error = styled.span`
 export const Repositories = styled.div`
   margin-top: 80px;
   max-width: 700px;
+`;
+
+export const Repository = styled.div`
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
+  margin-left: -28px;
+
+  &:hover {
+    transform: translateX(28px);
+  }
+
+  & + div {
+    margin-top: 16px;
+  }
 
   a {
     background: #fff;
@@ -77,15 +93,6 @@ export const Repositories = styled.div`
 
     display: flex;
     align-items: center;
-    transition: transform 0.2s;
-
-    &:hover {
-      transform: translateX(10px);
-    }
-
-    & + a {
-      margin-top: 16px;
-    }
 
     img {
       width: 64px;
@@ -112,6 +119,27 @@ export const Repositories = styled.div`
     svg {
       margin-left: auto;
       color: #cbcbd6;
+    }
+  }
+`;
+
+export const DeleteButton = styled.button`
+  border: 0;
+  background: transparent;
+  margin-right: 8px;
+
+  svg {
+    visibility: hidden;
+    opacity: 0;
+    color: #ffb5c4;
+    transition: visibility 0.2s, opacity 0.2s;
+
+    ${Repository}:hover & {
+      visibility: visible;
+      opacity: 1;
+      &:hover {
+        color: #ff7a78;
+      }
     }
   }
 `;
