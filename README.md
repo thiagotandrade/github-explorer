@@ -1,3 +1,5 @@
+![](.github/demo.gif)
+
 <h1 align="center">
   <img  src="src/assets/logo.svg"/>
   <br>
@@ -39,7 +41,7 @@ On the first screen, type `[username]/[repository]` on the input area to search 
 
 If you wish to see more details about a repository, you can click on the list item and see its current issues.
 
-# Improvements from previous version
+# Improvements
 
 - Add validation to check if user is searching for an already saved repository on the list;
 - Allow user to delete a repository from the list of saved repositories;
