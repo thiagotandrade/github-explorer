@@ -5,7 +5,13 @@
   Github Explorer
 </h1>
 
-<h4 align="center">Explore repositories from Github and view their issues. Developed on Rocketseat's GoStack Bootcamp with ReactJS + Typescript.</h4>
+<h4 align="center">
+  Explore repositories from Github and view their issues. 
+</h4>
+
+<h6 align="center">
+  Developed with ReactJS + Typescript during Rocketseat's Bootcamp GoStack.
+</h6>
 
 <br/>
 
@@ -15,24 +21,17 @@
   <a href="#usage">Usage</a>
 </p>
 
-<br/>
-<br/>
-
 # Prerequisites
 
 * [Node.JS](https://nodejs.org/)
 * [Yarn](https://classic.yarnpkg.com/)
 
-<br/>
-
 # Setup
 
-1. First clone this repository.
+1. First clone this repository.e
 2. Open a terminal window and navigate to the root folder.
 3. Type `yarn` to install all project dependencies.
 4. Execute `yarn start` to run the app.
-
-<br/>
 
 # Usage
 
