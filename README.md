@@ -29,11 +29,19 @@
 * [Yarn](https://classic.yarnpkg.com/)
 
 # Setup
+```
+# First clone this repository
+git clone https://github.com/thiagotandrade/github-explorer.git
 
-1. First clone this repository;
-2. Open a terminal window and navigate to the root folder;
-3. Type `yarn` to install all project dependencies;
-4. Execute `yarn start` to run the app.
+# Navigate to the root folder
+cd github-explorer
+
+# Install all project dependencies
+yarn
+
+# Run the app
+yarn start
+```
 
 # Usage
 
