@@ -51,7 +51,7 @@ If you wish to see more details about a repository, you can click on the list it
 
 # Improvements
 For my version of this application, I've made the following improvements:
-- Add validation to check if user is searching for an already saved repository on the list;
-- Allow user to delete a repository from the list of saved repositories;
+- Add validation to check if user is searching for an already listed repository;
+- Allow user to delete a repository from the list;
 - Refactor functions inside components to be called with useCallback hook (to prevent unnecessary function allocations).
 - Better styling on input search.
